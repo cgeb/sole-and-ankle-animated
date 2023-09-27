@@ -20,12 +20,30 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <NavLinkWrapper>
+            <MainNavLink href="/sale">Sale</MainNavLink>
+            <HoveredNavLink href="/sale" aria-hidden={true}>Sale</HoveredNavLink>
+          </NavLinkWrapper>
+          <NavLinkWrapper>
+            <MainNavLink href="/new">New&nbsp;Releases</MainNavLink>
+            <HoveredNavLink href="/new" aria-hidden={true}>New&nbsp;Releases</HoveredNavLink>
+          </NavLinkWrapper>
+          <NavLinkWrapper>
+            <MainNavLink href="/men">Men</MainNavLink>
+            <HoveredNavLink href="/men" aria-hidden={true}>Men</HoveredNavLink>
+          </NavLinkWrapper>
+          <NavLinkWrapper>
+            <MainNavLink href="/kids">Kids</MainNavLink>
+            <HoveredNavLink href="/kids" aria-hidden={true}>Kids</HoveredNavLink>
+          </NavLinkWrapper>
+          <NavLinkWrapper>
+            <MainNavLink href="/women">Women</MainNavLink>
+            <HoveredNavLink href="/women" aria-hidden={true}>Women</HoveredNavLink>
+          </NavLinkWrapper>
+          <NavLinkWrapper>
+            <MainNavLink href="/collections">Collections</MainNavLink>
+            <HoveredNavLink href="/collections" aria-hidden={true}>Collections</HoveredNavLink>
+          </NavLinkWrapper>
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -114,16 +132,47 @@ const Filler = styled.div`
   }
 `;
 
+const NavLinkWrapper = styled.div`
+  position: relative;
+  overflow: hidden;
+`
+
 const NavLink = styled.a`
+  display: block;
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--color-gray-900);
-  font-weight: ${WEIGHTS.medium};
 
-  &:first-of-type {
+  ${NavLinkWrapper}:first-of-type & {
     color: var(--color-secondary);
   }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    transform: translateY(var(--translate-from));
+    transition: transform 500ms;
+
+    ${NavLinkWrapper}:hover & {
+      transform: translateY(var(--translate-to));
+    }
+  }
+`;
+
+const MainNavLink = styled(NavLink)`
+  font-weight: ${WEIGHTS.medium};
+  --translate-from: 0%;
+  --translate-to: -100%;
+`
+
+const HoveredNavLink = styled(NavLink)`
+  font-weight: ${WEIGHTS.bold};
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  --translate-from: 100%;
+  --translate-to: 0%;
 `;
 
 export default Header;
